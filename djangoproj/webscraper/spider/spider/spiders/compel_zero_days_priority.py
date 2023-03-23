@@ -81,6 +81,14 @@ class CompelZeroDaysSpider(scrapy.Spider):
             else:
                 return 0
 
+        brand_mapping = {
+            'GIGADEV': 'GigaDevice',
+            'GigaDevice®': 'GigaDevice',
+        }
+
+        def map_brand_name(brand_name):
+            return brand_mapping.get(brand_name, brand_name)
+
         soup = BeautifulSoup(price_table_response.content, features='lxml')
         dms_offers = soup.find_all('tr', {'class': 'dms_offer'})
 
@@ -114,8 +122,8 @@ class CompelZeroDaysSpider(scrapy.Spider):
 
         offer_item = ProductOfferItem()
         offer_item['name'] = query_string
-        offer_item['brand'] = search_brend
-        offer_item['website'] = 'ДКО Электронщик'
+        offer_item['brand'] = map_brand_name(search_brend)
+        offer_item['website'] = 'Compel'
         offer_item['price'] = lowest_price
         offer_item['quantity'] = lowest_price_qty
         offer_item['days_until_shipment'] = days

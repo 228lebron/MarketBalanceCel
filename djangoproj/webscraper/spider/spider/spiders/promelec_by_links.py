@@ -7,6 +7,15 @@ class PromelecByLinksSpider(scrapy.Spider):
     start_urls = ['https://www.promelec.ru/catalog/1/11/2779/?page=1']
 
     def parse(self, response):
+
+        brand_mapping = {
+            'GIGADEV': 'GigaDevice',
+            'GigaDevice®': 'GigaDevice',
+        }
+
+        def map_brand_name(brand_name):
+            return brand_mapping.get(brand_name, brand_name)
+
         items = response.css('div.table-list__item')
         for item in items:
             if item.css('span.table-list__counter::text').re_first('\d+') is not None and int(
@@ -21,8 +30,8 @@ class PromelecByLinksSpider(scrapy.Spider):
 
                 offer_item = ProductOfferItem()
                 offer_item['name'] = product_name
-                offer_item['brand'] = brand
-                offer_item['website'] = 'Промэлектроника'
+                offer_item['brand'] = map_brand_name(brand)
+                offer_item['website'] = 'Promelectronica'
                 offer_item['price'] = price
                 offer_item['quantity'] = qty
                 offer_item['days_until_shipment'] = 0
