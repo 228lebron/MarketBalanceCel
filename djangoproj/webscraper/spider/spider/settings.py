@@ -97,7 +97,7 @@ import sys
 #PROJECT_ROOT = os.path.join(BASE_DIR, 'djangoproj')
 #sys.path.append(PROJECT_ROOT)
 
-sys.path.append('C:\MarketBalance\djangoproj')
+sys.path.append('C:\MarketBalance2\djangoproj')
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoproj.settings')

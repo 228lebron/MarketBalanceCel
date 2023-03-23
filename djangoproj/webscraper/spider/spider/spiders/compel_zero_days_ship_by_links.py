@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from webscraper.spider.spider.items import ProductOfferItem
-import datetime
 
 
 class CompelZeroDaysSpider(scrapy.Spider):
