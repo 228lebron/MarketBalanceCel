@@ -1,1 +1,3 @@
 compel_min_price_by_links.py - Отслеживает самую низкую цену на основе приоритета 0 дней до отгрузки, а затем наименьшее количество дней до отгрузки.
+
+pip install django scrapy scrapy-djangoitem beautifulsoup4
