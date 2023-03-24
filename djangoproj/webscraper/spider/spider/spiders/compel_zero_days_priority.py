@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from webscraper.spider.spider.items import ProductOfferItem
+from webscraper.spider.spider.utils import map_brand_name
 
 
 class CompelZeroDaysSpider(scrapy.Spider):
@@ -81,14 +82,6 @@ class CompelZeroDaysSpider(scrapy.Spider):
             else:
                 return 0
 
-        brand_mapping = {
-            'GIGADEV': 'GigaDevice',
-            'GigaDevice®': 'GigaDevice',
-        }
-
-        def map_brand_name(brand_name):
-            return brand_mapping.get(brand_name, brand_name)
-
         soup = BeautifulSoup(price_table_response.content, features='lxml')
         dms_offers = soup.find_all('tr', {'class': 'dms_offer'})
 
@@ -118,7 +111,6 @@ class CompelZeroDaysSpider(scrapy.Spider):
                         lowest_price = price
                         lowest_price_qty = int(qty_td['data-qty'])
                         days = days_until_shipment
-
 
         offer_item = ProductOfferItem()
         offer_item['name'] = query_string

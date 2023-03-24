@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ product_name }} Analysis</h1>
+    <h2>Average Price: ${{ avg_price.price__avg|floatformat:2 }}</h2>
+
+    <h2>Lowest Price Offer:</h2>
+    <p>Competitor: {{ best_price_offer.site }}</p>
+    <p>Price: ${{ best_price_offer.price }}</p>
+    <p>Shipping Time: {{ best_price_offer.days_until_shipment }} days</p>
+    <p>URL: <a href="{{ best_price_offer.url }}" target="_blank">{{ best_price_offer.url }}</a></p>
+    <p>Date: {{ best_price_offer.timestamp }} days</p>
+
+    <h2>Fastest Shipping Offer:</h2>
+    <p>Competitor: {{ best_shipping_offer.site }}</p>
+    <p>Price: ${{ best_shipping_offer.price }}</p>
+    <p>Shipping Time: {{ best_shipping_offer.days_until_shipment }} days</p>
+    <p>URL: <a href="{{ best_shipping_offer.url }}" target="_blank">{{ best_shipping_offer.url }}</a></p>
+    <p>Date: {{ best_shipping_offer.timestamp }} days</p>
+
+    <h2>Price History Chart:</h2>
+    <img src="data:image/png;base64,{{ graph }}" alt="Price History Chart">
+{% endblock %}
