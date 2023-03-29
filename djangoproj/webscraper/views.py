@@ -1,11 +1,19 @@
 from django.shortcuts import render
 from django.db.models import F
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET
 
 from .models import ProductOffer
 from .product_analysis import average_price, lowest_price, fastest_shipping
 from .utils import get_plot, get_prices_history_data, get_price_data_d
+
+from . import tasks
+
+
+def scrap(request):
+    tasks.run_scrapy_spider.delay()
+    return HttpResponse('Задача иди нахуй')
+
 
 
 @require_GET

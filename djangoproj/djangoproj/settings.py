@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'webscraper',
+    'celery',
+
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +124,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# CELERY CONFIGURATION
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'default'
+
+
+# CELERY BEAT SCHEDULE
+CELERY_BEAT_SCHEDULE = {
+    'run_spider_every_day': {
+        'task': 'webscraper.tasks.run_spider',
+        'schedule': timedelta(minutes=1),  # Run every day
+        'options': {'queue': 'default'},
+    },
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}

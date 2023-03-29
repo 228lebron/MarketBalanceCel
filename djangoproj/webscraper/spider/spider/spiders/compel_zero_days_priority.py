@@ -4,6 +4,12 @@ from bs4 import BeautifulSoup
 import re
 from webscraper.spider.spider.items import ProductOfferItem
 from webscraper.spider.spider.utils import map_brand_name
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import TakeFirst
+
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
+
 
 
 class CompelZeroDaysSpider(scrapy.Spider):
@@ -113,6 +119,7 @@ class CompelZeroDaysSpider(scrapy.Spider):
                         days = days_until_shipment
 
         offer_item = ProductOfferItem()
+
         offer_item['name'] = query_string
         offer_item['brand'] = map_brand_name(search_brend)
         offer_item['website'] = 'Compel'
@@ -122,4 +129,3 @@ class CompelZeroDaysSpider(scrapy.Spider):
         offer_item['url'] = response.url
 
         yield offer_item
-

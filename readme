@@ -1,1 +1,2 @@
 compel_zero_days_priority.py - Отслеживает самую низкую цену на основе приоритета 0 дней до отгрузки, а затем наименьшее количество дней до отгрузки.
+celery -A djangoproj worker --pool=solo -l info
